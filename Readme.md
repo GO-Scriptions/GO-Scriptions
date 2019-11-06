@@ -4,17 +4,22 @@ Read Me for GO Scriptions
 ## Bash
 Here are some helpful bash commands:
 
-To see all branches
+See all branches, the highlighted one is your current branch
 ``` --grovy
 git branch
 ```
 
-To create a new branch
+Create a new branch
 ``` --grovy
 git branch <BranchName>
 ```
 
-To switch to a different branch
+Switch to a different branch
 ``` --grovy
 git checkout <BranchName>
+```
+
+View commits in current branch
+``` --grovy
+git log
 ```
