@@ -25,6 +25,7 @@ func main() {
 	}
 	fmt.Println("Hello GO Scriptions!")
 	ping(db)
+	printDoctorTable(db)
 }
 
 func ping(db *sql.DB) {
