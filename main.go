@@ -51,28 +51,32 @@ func test(response http.ResponseWriter, request *http.Request) {
 func loginDoctor(response http.ResponseWriter, request *http.Request) {
     temp, _ := template.ParseFiles("logindoctor.html")
     name := request.FormValue("name")
+    //pw := request.FormValue("pw")
+
+    // query db to authenticate ....
+
+    // if authenticated
     session, _ := store.Get(request, "cookie-name")
     session.Values["doctor"] = true
     session.Values["pharmacist"] = false
     session.Values["name"] = name
     session.Save(request, response)
 
-    // query db to authenticate....
-
-
     temp.Execute(response, nil)
 }
 func loginPharmacist(response http.ResponseWriter, request *http.Request) {
     temp, _ := template.ParseFiles("loginpharmacist.html")
     name := request.FormValue("name")
+    //pw := request.FormValue("pw")
+
+    // query db to authenticate....
+
+    // if authenticated
     session, _ := store.Get(request, "cookie-name")
     session.Values["doctor"] = false
     session.Values["pharmacist"] = true
     session.Values["name"] = name
     session.Save(request, response)
-
-    // query db to authenticate....
-
 
     temp.Execute(response, nil)
 }
@@ -80,7 +84,7 @@ func logout(response http.ResponseWriter, request *http.Request) {
     temp, _ := template.ParseFiles("logout.html")
     session, _ := store.Get(request, "cookie-name")
 
-    // Revoke users authentication
+    // Revoke user's authentication
     session.Values["doctor"] = false
     session.Values["pharmacist"] = false
     session.Values["name"] = ""
@@ -91,10 +95,12 @@ func logout(response http.ResponseWriter, request *http.Request) {
 func makeKey() string {
         var i int
         var key string
-        var chars = [64]string{"a","b","c","d","e","f","g","h","1","2","3","4","5","6","7","8"}
+        var chars = []string{"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p"}
+	chars = append(chars,"q","r","s","t","u","v","w","x","y","z")
+	chars = append(chars,"0","1","2","3","4","5","6","7","8","9","$","&","@","*")
         for i<16 {
                 rand.Seed(time.Now().UnixNano())
-                number := rand.Intn(16)
+                number := rand.Intn(40)
                 key += chars[number]
                 i++
         }
