@@ -10,33 +10,35 @@ import (
     "github.com/gorilla/sessions"
 )
 type Info struct{
-        Authenticated bool
+        Doctor bool
+	Pharmacist bool
         Username string
 }
 var (
-    // key must be 16, 24 or 32 bytes long (AES-128, AES-192 or AES-256)
-    //key = []byte("super-secret-key")
     key = makeKey()
     store = sessions.NewCookieStore([]byte(key))
 )
 func index(response http.ResponseWriter, request *http.Request) {
     temp, _ := template.ParseFiles("index.html")
-    session, _ := store.Get(request, "cookie-name")
-    session.Values["authenticated"] = false
-    session.Save(request, response)
     temp.Execute(response, nil)
 }
 func test(response http.ResponseWriter, request *http.Request) {
     temp, _ := template.ParseFiles("test.html")
     session, _ := store.Get(request, "cookie-name")
     // Check if user is authenticated
-    auth, ok := session.Values["authenticated"]
+    doctor, ok := session.Values["doctor"]
+    if !ok {
+        http.Error(response, "Forbidden", http.StatusForbidden)
+        return
+    }
+    pharmacist, ok := session.Values["pharmacist"]
     if !ok {
         http.Error(response, "Forbidden", http.StatusForbidden)
         return
     }
     info := Info{}
-    info.Authenticated = auth.(bool)
+    info.Doctor = doctor.(bool)
+    info.Pharmacist = pharmacist.(bool)
     name, ok := session.Values["name"]
     if !ok {
         fmt.Println("no name")
@@ -46,26 +48,41 @@ func test(response http.ResponseWriter, request *http.Request) {
     temp.Execute(response, info)
 }
 
-func login(response http.ResponseWriter, request *http.Request) {
-    temp, _ := template.ParseFiles("login.html")
-    session, _ := store.Get(request, "cookie-name")
+func loginDoctor(response http.ResponseWriter, request *http.Request) {
+    temp, _ := template.ParseFiles("logindoctor.html")
     name := request.FormValue("name")
-    fmt.Println("name:",name)
-    // query db to authenticate....
-
-    // Set user as authenticated
-    session.Values["authenticated"] = true
+    session, _ := store.Get(request, "cookie-name")
+    session.Values["doctor"] = true
+    session.Values["pharmacist"] = false
     session.Values["name"] = name
     session.Save(request, response)
+
+    // query db to authenticate....
+
+
     temp.Execute(response, nil)
 }
+func loginPharmacist(response http.ResponseWriter, request *http.Request) {
+    temp, _ := template.ParseFiles("loginpharmacist.html")
+    name := request.FormValue("name")
+    session, _ := store.Get(request, "cookie-name")
+    session.Values["doctor"] = false
+    session.Values["pharmacist"] = true
+    session.Values["name"] = name
+    session.Save(request, response)
 
+    // query db to authenticate....
+
+
+    temp.Execute(response, nil)
+}
 func logout(response http.ResponseWriter, request *http.Request) {
     temp, _ := template.ParseFiles("logout.html")
     session, _ := store.Get(request, "cookie-name")
 
     // Revoke users authentication
-    session.Values["authenticated"] = false
+    session.Values["doctor"] = false
+    session.Values["pharmacist"] = false
     session.Values["name"] = ""
     session.Save(request, response)
     temp.Execute(response, nil)
@@ -85,10 +102,10 @@ func makeKey() string {
         return key
 
 }
-
 func main() {
     http.HandleFunc("/", index)
-    http.HandleFunc("/login", login)
+    http.HandleFunc("/loginpharmacist", loginPharmacist)
+    http.HandleFunc("/logindoctor", loginDoctor)
     http.HandleFunc("/logout", logout)
     http.HandleFunc("/test", test)
 

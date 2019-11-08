@@ -4,8 +4,10 @@
 </title>
 </head>
 <body>
-{{ if .Authenticated }}
-Welcome, {{ .Username }}
+{{ if .Doctor }}
+Welcome, {{ .Username }}. You are a doctor.
+{{ else if .Pharmacist }}
+Welcome, {{ .Username }}. You are a pharmacist.
 {{ else }}
 You are not logged in.
 {{ end }}
