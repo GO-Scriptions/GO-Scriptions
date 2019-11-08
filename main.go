@@ -26,6 +26,7 @@ func main() {
 	fmt.Println("Hello GO Scriptions!")
 	ping(db)
 	printDoctorTable(db)
+	printPharmacists(db)
 }
 
 func ping(db *sql.DB) {
@@ -50,5 +51,20 @@ func printDoctorTable(db *sql.DB) {
 
 		rows.Scan(&firstname, &lastname, &phone, &email, &username, &password)
 		fmt.Println(firstname, lastname, phone, email, username, password)
+	}
+}
+
+//this function prints the pharmacists Table
+func printPharmacists(db *sql.DB) {
+	rows, _ := db.Query(`SELECT * FROM Pharmacists`)
+	for rows.Next() {
+		var firstname string
+		var lastname string
+		var employeeId string
+		var password string
+		var isManager string
+
+		rows.Scan(&firstname, &lastname, &employeeId, &password, &isManager)
+		fmt.Println(firstname, lastname, employeeId, password, isManager)
 	}
 }
