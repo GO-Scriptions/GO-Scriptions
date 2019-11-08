@@ -28,12 +28,16 @@ func test(response http.ResponseWriter, request *http.Request) {
     // Check if user is authenticated
     doctor, ok := session.Values["doctor"]
     if !ok {
-        http.Error(response, "Forbidden", http.StatusForbidden)
+        response.Write([]byte("You do not have permission to access this page."))
         return
     }
     pharmacist, ok := session.Values["pharmacist"]
-    if !ok {
-        http.Error(response, "Forbidden", http.StatusForbidden)
+    if !ok{
+        response.Write([]byte("You do not have permission to access this page."))
+        return
+    }
+    if !doctor.(bool) && !pharmacist.(bool){
+        response.Write([]byte("You do not have permission to access this page."))
         return
     }
     info := Info{}
@@ -51,7 +55,8 @@ func test(response http.ResponseWriter, request *http.Request) {
 func loginDoctor(response http.ResponseWriter, request *http.Request) {
     temp, _ := template.ParseFiles("logindoctor.html")
     name := request.FormValue("name")
-    //pw := request.FormValue("pw")
+    // pw := request.FormValue("pw")
+   
 
     // query db to authenticate ....
 
@@ -67,7 +72,8 @@ func loginDoctor(response http.ResponseWriter, request *http.Request) {
 func loginPharmacist(response http.ResponseWriter, request *http.Request) {
     temp, _ := template.ParseFiles("loginpharmacist.html")
     name := request.FormValue("name")
-    //pw := request.FormValue("pw")
+    // pw := request.FormValue("pw")
+    
 
     // query db to authenticate....
 
