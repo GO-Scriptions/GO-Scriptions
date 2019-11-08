@@ -1,2 +1,1 @@
-# GO-Scriptions
-Project 2 - Creating a client-server application in GO!
+The github.com/gorilla/sessions package is used to keep track of who is logged in and what they are authorized to do. 
