@@ -32,8 +32,10 @@ This is how I created a local area network in GNS3:
 
 16. Save and exit.
 
-17. In GNS3, go to edit, then preferences, then VirtualBox VM's, and then click new.
+17. Enter "sudo netplan apply"
 
-18. Select the VM you want to add and then click finish. 
+18. In GNS3, go to edit, then preferences, then VirtualBox VM's, and then click new.
 
-19. Click apply and okay. Now you should be able to add the VM and connect it to the network. 
+19. Select the VM you want to add and then click finish. 
+
+20. Click apply and okay. Now you should be able to add the VM and connect it to the network. 
