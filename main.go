@@ -4,6 +4,9 @@ import (
 		"fmt"
 		"database/sql"
 		"math/rand"
+		"strconv"
+		"time"
+		"os/exec"
 
 		_ "github.com/lib/pq"
 )
@@ -39,6 +42,15 @@ func ping(db *sql.DB) {
 	fmt.Println("Successfully connected!")
 }
 
+// Bash script for Docker container and Image Creation
+func buildDocker() {
+	dockerbuild := exec.Command("docker", "build", "-t", "GoScriptionsdb", ".")
+		dockerbuild.Run()
+	dockerrun := exec.Command("docker", "run", "--name=GoScriptionsdb", "-p=5432:5432", "-d", "GoScriptionsdb")
+		dockerrun.Run()
+}
+
+
 //this function prints the pharmacists Table
 func printPharmacists(db *sql.DB) {
 	rows, _ := db.Query(`SELECT * FROM Pharmacists`)
@@ -52,6 +64,19 @@ func printPharmacists(db *sql.DB) {
 		rows.Scan(&firstname, &lastname, &employeeId, &password, &isManager)
 		fmt.Println(firstname, lastname, employeeId, password, isManager)
 	}
+}
+
+//this function prints out the inventory table
+func printInventory (dv *sql.DB) {
+	rows, _ := db.Query(`SELECT * FROM Inventory`)
+	for rows.Next() {
+		var Drug_Name string
+		var Amt_On_Hand int
+		var Cost_Per_Mg float64
+		var Supplier string
+
+		rows.Scan(&Drug_Name, &Amt_On_Hand, &Cost_Per_Mg, &Supplier)
+		fmt.Println(Drug_Name, Amt_On_Hand, Cost_Per_Mg, Supplier)
 }
 
 //This function Prints the Doctors Table
