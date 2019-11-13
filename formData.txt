@@ -1,0 +1,26 @@
+This is an explanation of how to get data from an html form.
+
+<form method="POST" action="/employeelogin">
+        <label>Username:</label><br>
+        <input type="text" name="nme"><br>
+
+        <label>Password:</label><br>
+        <input type="password" name="pw"><br>
+        <br>
+
+        <input type="submit" value="Login">
+</form>
+
+POST is the request method and action is where you want to submit the form to. 
+The value of the name attribute is how you reference the field in your Go code.
+
+You could get the name and password from the form like this:
+
+func employeelogin(response http.ResponseWriter, request *http.Request) {
+
+	name = request.FormValue("nme")
+	password = request.FormValue("pw")
+
+} 
+
+
