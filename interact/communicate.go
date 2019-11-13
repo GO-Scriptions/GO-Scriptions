@@ -1,4 +1,4 @@
-package communicate
+package interact
 
 import (
         "fmt"
@@ -10,7 +10,7 @@ import (
 
 var remoteUser, remoteHost string
 
-func executeCommand(cmd string) []byte {
+func ExecuteCommand(cmd string) []byte {
         //connect to remote host
         connection, session := connect()
         // execute go program on remote host and get its combined standard output and standard error
