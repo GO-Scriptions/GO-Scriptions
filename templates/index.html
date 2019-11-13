@@ -5,27 +5,22 @@
 </head>
 <body>
 
-Login as doctor:<br>
-<form action="/logindoctor" method="POST">
+Login:<br>
+<form action="/login" method="POST">
+
 name: <input type="text" name="name"><br>
 password: <input type="password" name="pw"><br>
 <input type="submit" value="Log in">
+
 </form>
+
 <br><br><br>
 <form action="/logout" method="POST">
+
 <input type="submit" value="Log out">
+
 </form>
-<br><br>
-Login as Pharmacist:<br>
-<form action="/loginpharmacist" method="POST">
-name: <input type="text" name="name"><br>
-password: <input type="password" name="pw"><br>
-<input type="submit" value="Log in">
-</form>
-<br><br><br>
-<form action="/logout" method="POST">
-<input type="submit" value="Log out">
-</form>
+
 
 </body>
 </html>

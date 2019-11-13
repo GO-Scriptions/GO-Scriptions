@@ -31,7 +31,7 @@ func logout(response http.ResponseWriter, request *http.Request) {
     temp, _ := template.ParseFiles("templates/logout.html")
 
     // Revoke user's authentication
-
+    loginInfo = LoginInfo{}
 }
 func main() {
     http.HandleFunc("/", index)
