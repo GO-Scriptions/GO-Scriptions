@@ -10,11 +10,6 @@ import (
 
 var remoteUser, remoteHost string
 
-func main() {
-        var out []byte
-        out = executeCommand("go run main.go")
-        fmt.Println("output from remote go program:", string(out))
-}
 func executeCommand(cmd string) []byte {
         //connect to remote host
         connection, session := connect()
