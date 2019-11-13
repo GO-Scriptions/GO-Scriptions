@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
+	"os/exec"
 )
 
 func main() {
@@ -30,6 +32,31 @@ func doctorloginfunc(response http.ResponseWriter, request *http.Request) {
 	temp, _ := template.ParseFiles("html/doctorlogin.html")
 	response.Header().Set("Content-Type", "text/html; charset=utf-8")
 	temp.Execute(response, nil)
+	//values of form text boxes
+	fname := request.FormValue("fname")
+	lname := request.FormValue("lname")
+	dpass := request.FormValue("dpass")
+	//dsubmit := request.FormValue("dsubmit")		//don't know how to get it to run only when submit is pressed
+	if fname == "Bob" && lname == "Builder" && dpass == "yes" { //change to compare to database
+		fmt.Println("Welcome", fname, lname)   //just for testing
+		fmt.Println("Your password is", dpass) //just for testing
+		//fmt.Println(dsubmit)
+
+		//add flags to make it check the Doctors table for user info in this case --doc........will need to change this code for other machines
+		syst, err := exec.Command("ssh", "user1@192.168.56.102", "cd", "test", ";", "go", "run", "main.go", "--doc").Output()
+		if err != nil {
+			fmt.Println(err)
+		}
+		result := string(syst)
+		fmt.Println(result)
+	} else {
+		fmt.Println("wrong") //just for testing
+		//fmt.Println(dsubmit)
+
+		//trying to print out when invalid info is entered
+		//t, err := template.New("foo").Parse(`{{define "T"}}Hello, {{.}}!{{end}}`)
+		//err = t.ExecuteTemplate(out, "T", "<script>alert('your information was incorrect please try again')</script>")
+	}
 }
 
 func doctorfunc(response http.ResponseWriter, request *http.Request) {
@@ -73,3 +100,17 @@ func prescriptionfunc(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("Content-Type", "text/html; charset=utf-8")
 	temp.Execute(response, nil)
 }
+
+//Other machines code --- problem how to send variables and values over ssh?
+
+// package main
+// import (
+// 	"fmt"
+// 	"flag"
+// )
+// func main {
+// docdb := flag.Bool("doc", false, "Check doctor table")
+// flag.Parse()
+// if docdb == true
+// fmt.Println access doc table data //put code to check db
+// }
