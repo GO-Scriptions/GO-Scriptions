@@ -18,10 +18,14 @@ const (
 
 func main(){
         var name, pw string
-        //dockerstart := exec.Command("docker", "start", "pgcontainer")
-        //dockerstart.Run()
         if len(os.Args) == 1 {
-              fmt.Println("initial connection")
+              //fmt.Println("initial connection")
+
+              // start Docker container
+              // may need to modify if your container is named something different
+              dockerstart := exec.Command("docker", "start", "pgcontainer")
+              dockerstart.Run()
+
               return
         }
         name = os.Args[1]
