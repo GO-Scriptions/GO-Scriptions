@@ -42,14 +42,14 @@ func ping(db *sql.DB) {
 	fmt.Println("Successfully connected!")
 }
 
-// Bash script for Docker container and Image Creation
+/* Bash script for Docker container and Image Creation
 func buildDocker() {
 	dockerbuild := exec.Command("docker", "build", "-t", "GoScriptionsdb", ".")
 		dockerbuild.Run()
 	dockerrun := exec.Command("docker", "run", "--name=GoScriptionsdb", "-p=5432:5432", "-d", "GoScriptionsdb")
 		dockerrun.Run()
 }
-
+*/
 
 //this function prints the pharmacists Table
 func printPharmacists(db *sql.DB) {
@@ -77,6 +77,7 @@ func printInventory (dv *sql.DB) {
 
 		rows.Scan(&Drug_Name, &Amt_On_Hand, &Cost_Per_Mg, &Supplier)
 		fmt.Println(Drug_Name, Amt_On_Hand, Cost_Per_Mg, Supplier)
+	}
 }
 
 //This function Prints the Doctors Table
@@ -136,3 +137,24 @@ func getdoctorID() string {
 	return acctnumstr
 }
 
+//function to print current  precriptions table
+func seePrescriptions(db *sql.DB) {
+	rows, _ := db.Query(`SELECT * FROM Prescriptions`)
+	for rows.Next() {
+		var Presc_ID string
+		var Doc_Prescribing string
+		var Drug_Name string
+		var Amount int
+		var Patient_First string
+		var Patient_Last string
+		var Patient_DOB date,
+		var Cost float64
+		var Presc_Status string
+		var Date_Prescribed date
+
+		rows.Scan(&Presc_ID, &Doc_Prescribing, &Drug_Name, &Amount, &Patient_First, &Patient_Last, &Patient_DOB, &Cost, &Presc_Status, &Date_Prescribed)
+		fmt.Println(Presc_ID, Doc_Prescribing, Drug_Name, Amount, Patient_First, Patient_Last, Patient_DOB, Cost, Presc_Status, Date_Prescribed)
+	}
+}
+
+//function to create new entries in prescription history table

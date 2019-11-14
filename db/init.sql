@@ -27,7 +27,7 @@ CREATE TABLE Prescriptions (
     Amount int,
     Patient_First varchar,
     Patient_Last varchar,
-    Pateient_DOB date,
+    Patient_DOB date,
     Cost decimal,
     Presc_Status varchar,
     Date_Prescribed date,
@@ -48,4 +48,4 @@ CREATE TABLE Prescription_History (
 INSERT INTO Doctors (First_Name, Last_Name, Phone, Email, Doctor-ID values ('Young', 'Farwa' ,'989-989-9898','thefarwacist@gmail.com','drFarwa');
 INSERT INTO Pharmacists values ('Bruce', 'Banner', '55', 'hulksmash','true');
 INSERT INTO Inventory values ('Ibuprofen', '5500', '1.25', 'Meditech');
-INSERT INTO Prescriptions values ('459056', 'Young Farwa', 'Amoxicillin', '500', 'Ben', 'Bonson', '2001-01-01', '3.25', '2019 -10-31');
+INSERT INTO Prescriptions values ('459056', 'Young Farwa', 'Amoxicillin', '500', 'Tony', 'Stark', '2001-01-01', '3.25', '2019 -10-31');
