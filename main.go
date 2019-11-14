@@ -26,7 +26,6 @@ func main() {
 	fmt.Println("Hello GO Scriptions!")
 	ping(db)
 	printDoctorTable(db)
-	printPharmacists(db)
 }
 
 func ping(db *sql.DB) {
@@ -36,6 +35,20 @@ func ping(db *sql.DB) {
 	}
 
 	fmt.Println("Successfully connected!")
+}
+
+//This function Prints the Doctors Table
+func printDoctorTable(db *sql.DB) {
+	rows, _ := db.Query(`SELECT * FROM Doctors`)
+	for rows.Next() {
+		var firstName string
+		var lastName string
+		var docUsername string
+		var docPassword string
+
+		rows.Scan(&firstName, &lastName, &docUsername, &docPassword)
+		fmt.Println(firstName, lastName, docUsername, docPassword)
+	}
 }
 
 //this function prints the pharmacists Table
@@ -64,20 +77,6 @@ func printInventory(db *sql.DB) {
 
 		rows.Scan(&drugname, &amtOnHand, &costpermg, &supplier)
 		fmt.Println(drugname, amtOnHand, costpermg, supplier)
-	}
-}
-
-//This function Prints the Doctors Table
-func printDoctorTable(db *sql.DB) {
-	rows, _ := db.Query(`SELECT * FROM Doctors`)
-	for rows.Next() {
-		var firstName string
-		var lastName string
-		var docUsername string
-		var docPassword string
-
-		rows.Scan(&firstName, &lastName, &docUsername, &docPassword)
-		fmt.Println(firstName, lastName, docUsername, docPassword)
 	}
 }
 
