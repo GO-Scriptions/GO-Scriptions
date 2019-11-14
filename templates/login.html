@@ -4,6 +4,39 @@
 </title>
 </head>
 <body>
-You are logged in.
+{{ if .Doctor }}
+Welcome {{ .Username }}, you are a doctor.
+
+<br><br><br>
+<form action="/logout" method="POST">
+
+<input type="submit" value="Log out">
+
+</form>
+
+{{ else if .Pharmacist }}
+Welcome {{ .Username }}, you are a pharmacist.
+
+<br><br><br>
+<form action="/logout" method="POST">
+
+<input type="submit" value="Log out">
+
+</form>
+
+{{ else }}
+Invalid login. Please login again.
+
+<br><br><br>
+Login:<br>
+<form action="/login" method="POST">
+
+name: <input type="text" name="name"><br><br>
+password: <input type="password" name="pw"><br>
+<input type="submit" value="Log in">
+
+</form>
+
+{{ end }}
 </body>
 </html>

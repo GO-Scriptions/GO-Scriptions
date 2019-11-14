@@ -1,1 +1,6 @@
-This Go program can ssh into an EC2 machine and execute another Go program in the home directory. The pem file must be in the same directory as the first Go program.  
+Notes:
+
+- make a rule to allow incoming HTTP traffic (port 80)
+
+- Amazon doesn't allow incoming HTTP traffic if your Go program isn't run with sudo
+

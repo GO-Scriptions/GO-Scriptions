@@ -10,15 +10,23 @@ import (
 
 var remoteUser, remoteHost string
 
-func ExecuteCommand(cmd string) []byte {
+// initial connection
+func Init(){
+     //connect to remote host
+     connection, session := connect()
+     // run main.go without any command line arguments
+     ExecuteCommand("/usr/local/go/bin/go run main.go")
+     defer connection.Close()
+     defer session.Close()
+}
+func ExecuteCommand(cmd string) string{
         //connect to remote host
         connection, session := connect()
         // execute go program on remote host and get its combined standard output and standard error
         out, _ := session.CombinedOutput(cmd)
-
         defer connection.Close()
         defer session.Close()
-        return out
+	return string(out)
 }
 func connect() (*ssh.Client, *ssh.Session) {
         var port =  "22"

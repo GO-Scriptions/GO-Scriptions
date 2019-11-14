@@ -5,6 +5,14 @@
 </head>
 <body>
 
+{{ if or .Pharmacist .Doctor }}
+<form action="/logout" method="POST">
+
+<input type="submit" value="Log out">
+
+</form>
+
+{{ else }}
 Login:<br>
 <form action="/login" method="POST">
 
@@ -14,13 +22,7 @@ password: <input type="password" name="pw"><br>
 
 </form>
 
-<br><br><br>
-<form action="/logout" method="POST">
-
-<input type="submit" value="Log out">
-
-</form>
-
+{{ end }}
 
 </body>
 </html>
