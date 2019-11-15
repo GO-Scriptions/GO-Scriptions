@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	host     = "localhost"
+	host     = "127.0.0.1"
 	port     = 5432
 	user     = "postgres"
 	password = "postgres"
@@ -26,6 +26,8 @@ func main() {
 	fmt.Println("Hello GO Scriptions!")
 	ping(db)
 	printDoctorTable(db)
+	printPharmacists(db)
+	seePrescriptions(db)
 }
 
 func ping(db *sql.DB) {

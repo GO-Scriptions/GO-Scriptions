@@ -2,7 +2,7 @@ CREATE TABLE doctors (
     docUsername varchar primary key,
     firstName varchar,
     lastName varchar,
-    cocPassword varchar);
+    docPassword varchar);
 
 CREATE TABLE Pharmacists (
     First_Name varchar,
