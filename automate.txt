@@ -21,8 +21,18 @@ func main(){
         dockerrun := exec.Command("sudo", "docker", "run", "--name=pgcontainer", "-p=5432:5432", "-d", "pgimage")
         dockerrun.Run()
 
+        // stop container
+        dockerstop = exec.Command("sudo", "docker", "stop", "pgcontainer")
+        dockerstop.Run()
+
+        // start container
+        dockerstart := exec.Command("sudo", "docker", "start", "pgcontainer")
+        dockerstart.Run()
+
+
         // to open psql shell- sudo docker exec -it pgcontainer psql -U postgres
         // to list tables in database in psql: \dt
         // to view rows in doctors table: select * from doctors;
         // to exit psql: \q
+
 }
